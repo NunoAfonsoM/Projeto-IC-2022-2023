@@ -11,6 +11,11 @@ class Characters:
         self.turnOrder = 0
         self.isPlayer = isPlayer
     
+    def __lt__(self, other):
+        if self.turnOrder == other.turnOrder:
+            return self.init > other.init
+        else:
+            return self.turnOrder > other.turnOrder
 
     def calcTurnOrder(self):
         self.turnOrder = self.init + dice(20)

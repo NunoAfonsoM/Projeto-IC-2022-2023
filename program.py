@@ -21,3 +21,9 @@ class Program:
     for x in characters:
         x.calcTurnOrder()
         print(x.turnOrder)
+
+    characters.sort()
+    print("..........")
+
+    for x in characters:
+        print("Turn Order: " + str(x.turnOrder) + " | Init: " + str(x.init))
