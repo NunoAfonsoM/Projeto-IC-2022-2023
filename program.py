@@ -23,46 +23,58 @@ class Program:
     inGame = True
 
     while inGame:
-        for x in characters:
-            x.calcTurnOrder()
-
-        characters.sort()
-
-        for char in characters:
-            if char.isPlayer:
-                print(char.name)
-                validInput = False
-                while not validInput:
-
-                    print("It's",char.name,"turn, what should he do?")
-                    print("1 - Attack\n2 - Cast Spell")
-                    pInput = input("Input: ")
-
-                    if pInput == "1":
-                        validInput = True
-                        char.attack(megaorc)
-
-                    elif pInput == "2":
-                        validInput = True
-                        char.castSpells("Rushdown", megaorc)
-                    else:
-                        print("Invalid input!")  
-            else:
-                char.attack(megaorc)
         
-        #Pop all characters who have 0 or less hp
-        for char in characters:
-            if char.hp <= 0:
-                print(char.name,"has died... press f")
-                characters.pop[char]
+        pInput = input("Start new round? Y/N")
+        pInput = pInput.capitalize()
+
+        if pInput == "Y":
         
+            for x in characters:
+                x.calcTurnOrder()
+
+            characters.sort()
+
+            for char in characters:
+                if char.isPlayer:
+                    print(char.name)
+                    validInput = False
+                    while not validInput:
+
+                        print("It's",char.name,"turn, what should he do?")
+                        print("1 - Attack\n2 - Cast Spell")
+                        pInput = input("Input: ")
+
+                        if pInput == "1":
+                            validInput = True
+                            char.attack(megaorc)
+
+                        elif pInput == "2":
+                            validInput = True
+                            char.castSpells("Rushdown", megaorc)
+                        else:
+                            print("Invalid input!")  
+                else:
+                    char.attack(megaorc)
+            
+            #Pop all characters who have 0 or less hp
+            for char in characters:
+                if char.hp <= 0:
+                    print(char.name,"has died... press f")
+                    characters.pop[char]
+        
+        elif pInput == "N":
+            print("OK")
+
+        else:
+            print("Invalid input")
+
         if (warrior not in characters) and (priest not in characters):
             inGame = False
             playerWin = False
         elif characters.count(orc) < 1:
             inGame = False
             playerWin = True
-    
+
     if playerWin:
         print("Player Won!")
     else:
