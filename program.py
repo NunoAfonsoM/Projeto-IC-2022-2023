@@ -29,6 +29,6 @@ class Program:
     
     priest.castSpells("Exorcism", megaorc)
     warrior.mp = 3
-    if warrior.testSpells("Rusdown"):
+    if warrior.testSpells("Rushdown"):
         warrior.castSpells("Rushdown", megaorc)
     
