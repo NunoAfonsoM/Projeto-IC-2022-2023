@@ -128,21 +128,23 @@ class Program:
                     if char.hp <= 0:
                         print(char.name,"has died... press f")
                         characters.pop(characters.index(char))
-        
+            
+            if (warrior not in characters) and (priest not in characters):
+                inGame = False
+                playerWin = False
+            elif characters.count(orc) < 1:
+                inGame = False
+                playerWin = True
+    
         elif pInput == "N":
-            print("OK")
+            pInput = input("What do you wanna do?\n1 - Exit\n2 - Inspect characters\nInput: ")
+            if pInput == "1":
+                print("You ended the game...")
+                break
 
         else:
-            print("Invalid input")
+            print("Invalid input")  
 
-        if (warrior not in characters) and (priest not in characters):
-            inGame = False
-            playerWin = False
-        elif characters.count(orc) < 1:
-            inGame = False
-            playerWin = True
-
-    if playerWin:
-        print("Player Won!")
-    else:
-        print("Player Lost...")
+    if not inGame:
+        if playerWin : print("PLAYER WINS!")
+        else : print("Player lost...")
