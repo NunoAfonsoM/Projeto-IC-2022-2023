@@ -19,16 +19,51 @@ class Program:
        characters.append(orc)
 
     megaorc = Characters("Mega Orc", 100, 0, 0, 0, 0, False)
-    
 
-    for x in characters:
-        x.calcTurnOrder()
+    inGame = True
+
+    while inGame:
+        for x in characters:
+            x.calcTurnOrder()
+
+        characters.sort()
+
+        for char in characters:
+            if char.isPlayer:
+                print(char.name)
+                validInput = False
+                while not validInput:
+
+                    print("It's",char.name,"turn, what should he do?")
+                    print("1 - Attack\n2 - Cast Spell")
+                    pInput = input("Input: ")
+
+                    if pInput == "1":
+                        validInput = True
+                        char.attack(megaorc)
+
+                    elif pInput == "2":
+                        validInput = True
+                        char.castSpells("Rushdown", megaorc)
+                    else:
+                        print("Invalid input!")  
+            else:
+                char.attack(megaorc)
         
-
-    characters.sort()
+        #Pop all characters who have 0 or less hp
+        for char in characters:
+            if char.hp <= 0:
+                print(char.name,"has died... press f")
+                characters.pop[char]
+        
+        if (warrior not in characters) and (priest not in characters):
+            inGame = False
+            playerWin = False
+        elif characters.count(orc) < 1:
+            inGame = False
+            playerWin = True
     
-    priest.castSpells("Exorcism", megaorc)
-    warrior.mp = 3
-    if warrior.testSpells("Rushdown"):
-        warrior.castSpells("Rushdown", megaorc)
-    
+    if playerWin:
+        print("Player Won!")
+    else:
+        print("Player Lost...")
