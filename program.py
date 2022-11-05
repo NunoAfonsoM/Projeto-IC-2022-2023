@@ -36,7 +36,12 @@ class Program:
 
             for char in characters:
                 if char.isPlayer:
-                    print(char.name)
+
+                    targetIndexes = []
+                    for x in characters:
+                        if not x.isPlayer:
+                            targetIndexes.append(characters.index(x))
+
                     validInput = False
                     while not validInput:
 
@@ -46,7 +51,21 @@ class Program:
 
                         if pInput == "1":
                             validInput = True
-                            char.attack(megaorc)
+                            validTarget = False
+                            while not validTarget:
+                                print("What is your target? ")
+
+                                for x in range(len(targetIndexes)):
+                                    print(str(x+1)+" - "+ characters[targetIndexes[x]].name)
+                                
+                                pInput = input("input: ")
+
+                                try:
+                                    char.attack(characters[targetIndexes[int(pInput)-1]])
+                                    validTarget=True
+                                except:
+                                    print("Invalid input ")
+
 
                         elif pInput == "2":
                             validInput = True
