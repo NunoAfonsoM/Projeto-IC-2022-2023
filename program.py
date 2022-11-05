@@ -28,3 +28,7 @@ class Program:
     characters.sort()
     
     priest.castSpells("Exorcism", megaorc)
+    warrior.mp = 3
+    if warrior.testSpells("Rusdown"):
+        warrior.castSpells("Rushdown", megaorc)
+    

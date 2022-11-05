@@ -31,3 +31,21 @@ class PlayerCharacters(Characters):
 
         print(target.name + " is now at: " + str(target.hp) + " hp.")
         print("---------------")
+
+    def testSpells(self, spell: str):
+
+        manaCost = 0
+        if spell == "Rushdown":
+            manaCost = 5
+
+        elif spell == "Exorcism":
+            manaCost = 5
+            
+
+        elif spell == "Mend":
+            manaCost= 3
+        
+        if self.mp < manaCost:
+            return False
+        else:
+            return True
