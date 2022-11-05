@@ -19,3 +19,10 @@ class Characters:
 
     def calcTurnOrder(self):
         self.turnOrder = self.init + dice(20)
+
+    def attack(self, target):
+        dmg = self.wp - target.ap
+        target.hp -= dmg
+        print(self.name + " attacked " + target.name + " for "+ str(dmg) + " damage!")
+        print(target.name + " is now at: " + str(target.hp) + " hp.")
+        print("---------------")

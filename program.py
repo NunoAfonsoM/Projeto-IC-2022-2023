@@ -12,11 +12,14 @@ class Program:
     
     characters.append(warrior)
     characters.append(priest)
-    
+
 
     for x in range(2):
        orc = Characters("Orc "+ str(x+1), 15, 0, 2, 2, 2, False)
        characters.append(orc)
+
+    megaorc = Characters("Mega Orc", 100, 0, 0, 0, 0, False)
+    
 
     for x in characters:
         x.calcTurnOrder()
@@ -26,4 +29,4 @@ class Program:
     print("..........")
 
     for x in characters:
-        print("Turn Order: " + str(x.turnOrder) + " | Init: " + str(x.init))
+        x.attack(megaorc)
