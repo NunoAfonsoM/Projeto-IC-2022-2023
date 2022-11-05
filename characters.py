@@ -23,6 +23,8 @@ class Characters:
     def attack(self, target):
         dmg = self.wp - target.ap
         target.hp -= dmg
+        if target.hp < 0:
+            target.hp = 0
         print(self.name + " attacked " + target.name + " for "+ str(dmg) + " damage!")
         print(target.name + " is now at: " + str(target.hp) + " hp.")
         print("---------------")

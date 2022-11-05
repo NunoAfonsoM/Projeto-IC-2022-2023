@@ -1,7 +1,6 @@
 from characters import Characters
 from playerCharacters import PlayerCharacters
-
-
+from dice import dice
 
 class Program:
     
@@ -14,7 +13,7 @@ class Program:
     characters.append(priest)
 
 
-    for x in range(2):
+    for x in range(1):
        orc = Characters("Orc "+ str(x+1), 15, 0, 2, 2, 2, False)
        characters.append(orc)
 
@@ -117,7 +116,12 @@ class Program:
                         else:
                             print("Invalid input!")  
                 else:
-                    char.attack(megaorc)
+                    targetIndexes = []
+                    for x in characters:
+                        if x.isPlayer:
+                            targetIndexes.append(characters.index(x))
+                    target = dice(len(targetIndexes)) - 1
+                    char.attack(characters[targetIndexes[target]])
             
                 #Pop all characters who have 0 or less hp
                 for char in characters:

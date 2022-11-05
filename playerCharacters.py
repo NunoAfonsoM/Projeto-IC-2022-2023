@@ -28,6 +28,9 @@ class PlayerCharacters(Characters):
 
         self.mp -= manaCost
         target.hp += spellEffectValue
+        
+        if target.hp < 0:
+            target.hp = 0
 
         print(target.name + " is now at: " + str(target.hp) + " hp.")
         print("---------------")
