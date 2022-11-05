@@ -19,4 +19,5 @@ class Program:
        characters.append(orc)
 
     for x in characters:
-        print(x.name)
+        x.calcTurnOrder()
+        print(x.turnOrder)
