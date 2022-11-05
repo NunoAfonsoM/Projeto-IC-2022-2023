@@ -24,7 +24,7 @@ class Program:
 
     while inGame:
         
-        pInput = input("Start new round? Y/N")
+        pInput = input("Start new round? Y/N\nInput: ")
         pInput = pInput.capitalize()
 
         if pInput == "Y":
@@ -69,17 +69,61 @@ class Program:
 
                         elif pInput == "2":
                             validInput = True
-                            char.castSpells("Rushdown", megaorc)
+                            validSpell = False
+                            while not validSpell:
+                                canCast = False
+                                spell = ""
+                                print("Wich spell you want to use?")
+
+                                for x in range(len(char.spells)):
+                                    print(str(x + 1) + " - " + char.spells[x]) 
+
+                                pInput = input("Input: ")
+                                print("-------")
+                                
+                                print(char.spells[int(pInput)-1])
+
+                                try:
+                                    canCast = char.testSpells(char.spells[int(pInput)-1])
+                                    validSpell = True
+                                    spell = char.spells[int(pInput)-1]
+                                except:
+                                    print("Invalid input")
+
+                                if canCast:
+                                    validTarget = False
+                                    while not validTarget:
+                                        print("What's your target?")
+                                        if(spell == "Mend"):
+                                            targetIndexes = []
+                                            for x in characters:
+                                                if x.isPlayer:
+                                                    targetIndexes.append(characters.index(x))
+
+                                        for x in range(len(targetIndexes)):
+                                            print(str(x+1) + " - " + characters[targetIndexes[x]].name )
+
+                                        pInput = input("Input: ")
+
+                                        try:
+                                            char.castSpells(spell, characters[targetIndexes[int(pInput)-1]])
+                                            validTarget = True
+                                        except:
+                                            print("Invalid input")
+                                else:
+                                    validInput = False
+                                    print("Not enough Mana!")
+                                    
                         else:
                             print("Invalid input!")  
                 else:
                     char.attack(megaorc)
             
-            #Pop all characters who have 0 or less hp
-            for char in characters:
-                if char.hp <= 0:
-                    print(char.name,"has died... press f")
-                    characters.pop[char]
+                #Pop all characters who have 0 or less hp
+                for char in characters:
+                    if char.hp <= 0:
+                        print(char.name,"has died... press f")
+                        characters.pop(characters.index(char))
         
         elif pInput == "N":
             print("OK")
