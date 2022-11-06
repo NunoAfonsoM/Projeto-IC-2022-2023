@@ -2,6 +2,7 @@ from characters import Characters
 from playerCharacters import PlayerCharacters
 from dice import dice
 import os
+from rules import printRules
 
 class Program:
     
@@ -18,24 +19,99 @@ class Program:
     orcNames = f.readlines()
     f.close()
     
-    for x in range(4):
+    clear()
+    printRules()
+    startGame = False
+    difficulty = "Easy"
+    numOfWaves = 1
+    while not startGame:
+        validInput = False
+        while not validInput:
+            pInput = input("Do you want to change game settings? Y/N\nInput:").capitalize()
+            numOfOrcs = 1
+            if pInput == "Y":
+                validInput = True
+                print("What do you want to change?\n1 - Difficulty\n2 - Number of waves?")
+                pInput = input("Input: ").capitalize()
+                if pInput == "1":
+                    validDifficulty = False
+                    while not validDifficulty:
+                        print("Which difficulty do you want?\n1 - Easy\n2 - Medium\n3 - Hard\nCancel - Go back")
+                        pInput = input("Input: ").capitalize()
+                        if pInput == "1":
+                            validDifficulty = True
+                            difficulty = "Easy"
+                            print("Difficulty set to Easy")
+                        elif pInput == "2":
+                            validDifficulty = True
+                            difficulty = "Medium"
+                            print("Difficulty set to Medium")
+                        elif pInput == "3":
+                            validDifficulty = True
+                            difficulty = "Hard"
+                            print("Difficulty set to Hard")
+                        elif pInput == "Cancel":
+                            validDifficulty = True
+                            print("No changes to difficulty!\nDifficulty remains", difficulty)
+                        else:
+                            print(pInput)
+                            print("Invalid Input: ")
+                elif pInput == "2":
+                    validWaves = False
+                    while not validWaves:
+                        print("How many waves?")
+                        pInput = input("Cancel - Go back\nNumber of waves: ").capitalize()
+                        if pInput == "Cancel":
+                            validWaves = True
+                            print("No changes to number of waves!\nNumber of waves remains", numOfWaves)
+                        else:
+                            try:
+                                numOfWaves = int(pInput)
+                                validWaves = True
+                                print("Number of waves changed to:", numOfWaves)
+                            except:
+                                print("Invalid Input")
+                        
+
+
+            elif pInput == "N":
+                validInput = True
+                startGame = True
+                pass
+            else:
+                print("Invalid input")
+
+    print("Starting game with", numOfWaves,"waves at", difficulty,"difficulty!")
+    print("---------------")
+    if difficulty == "Easy":
+        numOfOrcs = 4
+        orcStats = 15, 0, 2, 2, 2
+    elif difficulty == "Medium":
+        numOfOrcs = 4
+        orcStats = 20, 0, 2, 3, 4
+    elif difficulty == "Hard":
+        numOfOrcs = 6
+        orcStats = 20, 0, 2, 3, 4
+
+    for x in range(numOfOrcs):
         orcName = orcNames[dice(len(orcNames))-1]
-        orc = Characters(orcName.strip(), 15, 0, 2, 2, 2, False)
+        orc = Characters(orcName.strip(), orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
         orcNames.pop(orcNames.index(orcName))
         characters.append(orc)
        
     inGame = True
 
-    clear()
-    print(orc.name)
+    currentWave = 1
+    playerChars = 2
+    enemiesChars = numOfOrcs
     while inGame:
         
-        pInput = input("Start new round? Y/N\nInput: ")
-        pInput = pInput.capitalize()
+        pInput = input("Start new round? Y/N\nInput: ").capitalize()
 
         if pInput == "Y":
 
-            clear()     
+            clear()
+            print("Current wave:", currentWave) 
 
             for x in characters:
                 x.calcTurnOrder()
@@ -43,7 +119,8 @@ class Program:
             characters.sort()
 
             for char in characters:
-                if char.isPlayer:
+
+                if char.isPlayer and enemiesChars > 0:
 
                     targetIndexes = []
                     for x in characters:
@@ -128,7 +205,7 @@ class Program:
                                     
                         else:
                             print("Invalid input!")  
-                else:
+                elif not char.isPlayer and playerChars > 0:
                     targetIndexes = []
                     for x in characters:
                         if x.isPlayer:
@@ -143,20 +220,34 @@ class Program:
                         print(char.name,"has died... press f")
                         characters.pop(characters.index(char))
             
-            playerChars = 0
-            enemiesChars = 0
-            for x in characters:
-                if x.isPlayer:
-                    playerChars += 1
-                else:
-                    enemiesChars += 1
-            
-            if playerChars < 1:
-                inGame = False
-                playerWin = False
-            elif enemiesChars < 1:
-                inGame = False
-                playerWin = True
+                playerChars = 0
+                enemiesChars = 0
+                for x in characters:
+                    if x.isPlayer:
+                        playerChars += 1
+                    else:
+                        enemiesChars += 1
+                
+                if playerChars < 1:
+                    inGame = False
+                    playerWin = False
+                elif enemiesChars < 1:
+                    if currentWave < numOfWaves:
+                        currentWave += 1
+                        if len(orcNames) < numOfOrcs: 
+                            f = open("OrcNames.txt")
+                            orcNames = f.readlines()
+                            f.close() 
+                            
+                        for x in range(numOfOrcs):
+                            orcName = orcNames[dice(len(orcNames))-1]
+                            orc = Characters(orcName.strip(), 15, 0, 2, 2, 2, False)
+                            orcNames.pop(orcNames.index(orcName))
+                            characters.append(orc)
+                        enemiesChars = numOfOrcs
+                    else:
+                        inGame = False
+                        playerWin = True
     
         elif pInput == "N":
             pInput = input("What do you wanna do?\n1 - Exit\n2 - Inspect characters\nInput: ")
