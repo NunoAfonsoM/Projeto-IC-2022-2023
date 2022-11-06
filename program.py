@@ -27,6 +27,7 @@ class Program:
     inGame = True
 
     clear()
+    print(orc.name)
     while inGame:
         
         pInput = input("Start new round? Y/N\nInput: ")
@@ -142,10 +143,18 @@ class Program:
                         print(char.name,"has died... press f")
                         characters.pop(characters.index(char))
             
-            if (warrior not in characters) and (priest not in characters):
+            playerChars = 0
+            enemiesChars = 0
+            for x in characters:
+                if x.isPlayer:
+                    playerChars += 1
+                else:
+                    enemiesChars += 1
+            
+            if playerChars < 1:
                 inGame = False
                 playerWin = False
-            elif characters.count(orc) < 1:
+            elif enemiesChars < 1:
                 inGame = False
                 playerWin = True
     
