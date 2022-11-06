@@ -11,6 +11,7 @@ class PlayerCharacters(Characters):
     def castSpells(self, spell: str, target: Characters):
 
         manaCost = 0
+        print("---------------")
         if spell == "Rushdown":
             spellEffectValue = -1 *(self.wp + dice(4))
             manaCost = 5
@@ -33,7 +34,6 @@ class PlayerCharacters(Characters):
             target.hp = 0
 
         print(target.name + " is now at: " + str(target.hp) + " hp.")
-        print("---------------")
 
     def testSpells(self, spell: str):
         manaCost = 0
