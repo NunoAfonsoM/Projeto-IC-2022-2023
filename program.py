@@ -7,25 +7,25 @@ from colorama import Fore
 
 def printRules():
     print("---------------")
-    print("Your " + Fore.BLUE + "party "+ Fore.WHITE + "is fighting a evil " + Fore.RED + "Sorcerer"+ Fore.WHITE + "...")
-    print("Defeat his hoard of " + Fore.RED + "orcs "+ Fore.WHITE + "to win!")
-    print("You can choose your difficulty, the default is " + Fore.GREEN + "Easy" + Fore.WHITE + ":")
-    print(Fore.GREEN + "      Easy" + Fore.WHITE + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.WHITE + "with default stats")
-    print(Fore.YELLOW + "      Medium" + Fore.WHITE + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.WHITE + "with enhanced stats")
-    print(Fore.RED + "      Hard" + Fore.WHITE + ": waves of 6 " + Fore.RED + "Orcs "+ Fore.WHITE + "with enhanced stats")
+    print("Your " + Fore.BLUE + "party "+ Fore.RESET + "is fighting a evil " + Fore.RED + "Sorcerer"+ Fore.RESET + "...")
+    print("Defeat his hoard of " + Fore.RED + "orcs "+ Fore.RESET + "to win!")
+    print("You can choose your difficulty, the default is " + Fore.GREEN + "Easy" + Fore.RESET + ":")
+    print(Fore.GREEN + "      Easy" + Fore.RESET + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.RESET + "with default stats")
+    print(Fore.YELLOW + "      Medium" + Fore.RESET + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.RESET + "with enhanced stats")
+    print(Fore.RED + "      Hard" + Fore.RESET + ": waves of 6 " + Fore.RED + "Orcs "+ Fore.RESET + "with enhanced stats")
     print("The default number of waves is 1, but you can choose how many waves you want before starting the first round!")
     print("You can exit the game by choosing not to start a new round and then choosing to exit")
     print("---------------")
 
 def returnToNormal(string: str):
-    return (Fore.WHITE + colorama.Style.RESET_ALL + string)
+    return (Fore.RESET + colorama.Style.RESET_ALL + string)
 class Program:
     
     clear = lambda: os.system('cls')
     characters = []
 
-    warrior = PlayerCharacters(Fore.BLUE + "Warrior" + Fore.WHITE, 32, 5, 2, 5, 2, True, [Fore.MAGENTA + "Rushdown" + Fore.RESET])
-    priest = PlayerCharacters(Fore.YELLOW + "Priest" + Fore.WHITE, 20, 25, 0, 2, 6, True, [Fore.MAGENTA + "Exorcism" + Fore.RESET, Fore.MAGENTA + "Mend" + Fore.RESET])
+    warrior = PlayerCharacters(Fore.BLUE + "Warrior" + Fore.RESET, 32, 5, 2, 5, 2, True, [Fore.MAGENTA + "Rushdown" + Fore.RESET])
+    priest = PlayerCharacters(Fore.YELLOW + "Priest" + Fore.RESET, 20, 25, 0, 2, 6, True, [Fore.MAGENTA + "Exorcism" + Fore.RESET, Fore.MAGENTA + "Mend" + Fore.RESET])
     
     characters.append(warrior)
     characters.append(priest)
@@ -42,8 +42,8 @@ class Program:
     while not startGame:
         validInput = False
         while not validInput:
-            print("Do you want to change game settings? " + (Fore.GREEN +"Y") + Fore.WHITE + "/" + (Fore.RED + "N"))
-            pInput = input(Fore.WHITE + "Input: ").capitalize()
+            print("Do you want to change game settings? " + (Fore.GREEN +"Y") + Fore.RESET + "/" + (Fore.RED + "N"))
+            pInput = input(Fore.RESET + "Input: ").capitalize()
             numOfOrcs = 1
             if pInput == "Y":
                 validInput = True
@@ -56,29 +56,29 @@ class Program:
                         print(Fore.GREEN + "1 - Easy")
                         print(Fore.YELLOW +  "2 - Medium")
                         print(Fore.RED + "3 - Hard")
-                        print(Fore.WHITE + "Cancel - Go back")
+                        print(Fore.RESET + "Cancel - Go back")
                         pInput = input("Input: ").capitalize()
                         if pInput == "1":
                             validDifficulty = True
                             difficulty = "Easy"
-                            print("Difficulty set to " + Fore.GREEN + "Easy" + Fore.WHITE)
+                            print("Difficulty set to " + Fore.GREEN + "Easy" + Fore.RESET)
                         elif pInput == "2":
                             validDifficulty = True
                             difficulty = "Medium"
-                            print("Difficulty set to " + Fore.YELLOW + "Medium" + Fore.WHITE)
+                            print("Difficulty set to " + Fore.YELLOW + "Medium" + Fore.RESET)
                         elif pInput == "3":
                             validDifficulty = True
                             difficulty = "Hard"
-                            print("Difficulty set to " + Fore.RED + "Hard" + Fore.WHITE)
+                            print("Difficulty set to " + Fore.RED + "Hard" + Fore.RESET)
                         elif pInput == "Cancel":
                             validDifficulty = True
                             print(Fore.RED + "No changes to difficulty!")
                             if difficulty == "Easy":
-                                print(Fore.WHITE + "Difficulty remains: " + Fore.GREEN + "Easy" + Fore.WHITE)
+                                print(Fore.RESET + "Difficulty remains: " + Fore.GREEN + "Easy" + Fore.RESET)
                             elif difficulty == "Medium":
-                                print(Fore.WHITE + "Difficulty remains: " + Fore.YELLOW + "Medium" + Fore.WHITE)
+                                print(Fore.RESET + "Difficulty remains: " + Fore.YELLOW + "Medium" + Fore.RESET)
                             elif difficulty == "Hard":
-                                print(Fore.WHITE + "Difficulty remains: " + Fore.RED + "Hard" + Fore.WHITE)
+                                print(Fore.RESET + "Difficulty remains: " + Fore.RED + "Hard" + Fore.RESET)
                         else:
                             print(pInput)
                             print("Invalid Input: ")
@@ -121,7 +121,7 @@ class Program:
 
     for x in range(numOfOrcs):
         orcName = orcNames[dice(len(orcNames))-1]
-        orc = Characters(Fore.RED + orcName.strip() + Fore.WHITE, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
+        orc = Characters(Fore.RED + orcName.strip() + Fore.RESET, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
         orcNames.pop(orcNames.index(orcName))
         characters.append(orc)
        
@@ -133,8 +133,8 @@ class Program:
     while inGame:
         
         
-        print("Start new Round? " + (Fore.GREEN +"Y") + Fore.WHITE + "/" + (Fore.RED + "N"))
-        pInput = input(Fore.WHITE + "Input: ").capitalize()
+        print("Start new Round? " + (Fore.GREEN +"Y") + Fore.RESET + "/" + (Fore.RED + "N"))
+        pInput = input(Fore.RESET + "Input: ").capitalize()
 
         if pInput == "Y":
 
@@ -159,8 +159,8 @@ class Program:
                     while not validInput:
                         
                         print("---------------")
-                        print("It's " + Fore.BLUE + char.name + Fore.WHITE + " turn, what should he do?")
-                        print("1 - " + Fore.RED + "Attack" + Fore.WHITE + "\n2 - " + Fore.MAGENTA + "Cast Spell" + Fore.RESET)
+                        print("It's " + Fore.BLUE + char.name + Fore.RESET + " turn, what should he do?")
+                        print("1 - " + Fore.RED + "Attack" + Fore.RESET + "\n2 - " + Fore.MAGENTA + "Cast Spell" + Fore.RESET)
                         pInput = input("Input: ")
 
                         if pInput == "1":
@@ -270,7 +270,7 @@ class Program:
                             
                         for x in range(numOfOrcs):
                             orcName = orcNames[dice(len(orcNames))-1]
-                            orc = Characters(Fore.RED + orcName.strip() + Fore.WHITE, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
+                            orc = Characters(Fore.RED + orcName.strip() + Fore.RESET, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
                             orcNames.pop(orcNames.index(orcName))
                             characters.append(orc)
                         enemiesChars = numOfOrcs
