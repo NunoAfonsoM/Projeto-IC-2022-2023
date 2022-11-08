@@ -28,4 +28,11 @@ class Characters:
         print("---------------")
         print(self.name + " attacked " + target.name + " for "+ str(dmg) + " damage!")
         print(target.name + " is now at: " + str(target.hp) + " hp.")
-        
+    
+    def inspectChar(self):
+        print("Name:",self.name)
+        print("HP:",self.hp)
+        print("MP:",self.mp)
+        print("AP:",self.ap)
+        print("WP:",self.wp)
+        print("Init:",self.init)

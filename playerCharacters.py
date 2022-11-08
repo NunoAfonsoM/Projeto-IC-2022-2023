@@ -1,5 +1,7 @@
 from characters import Characters
 from dice import dice
+from colorama import Fore
+
 
 class PlayerCharacters(Characters):
 
@@ -12,20 +14,20 @@ class PlayerCharacters(Characters):
 
         manaCost = 0
         print("---------------")
-        if spell == "Rushdown":
+        if spell == Fore.MAGENTA + "Rushdown" + Fore.RESET:
             spellEffectValue = -1 *(self.wp + dice(4))
             manaCost = 5
-            print(self.name + " used Rushdown on " + target.name + " for "+ str(abs(spellEffectValue)) + " damage!")
+            print(self.name + " used " + spell + " on " + target.name + " for "+ str(abs(spellEffectValue)) + " damage!")
 
-        elif spell == "Exorcism":
+        elif spell == Fore.MAGENTA + "Exorcism" + Fore.RESET:
             spellEffectValue = -1 *(dice(4)*2)
             manaCost = 5
-            print(self.name + " used Exorcism on " + target.name + " for "+ str(abs(spellEffectValue)) + " damage!")
+            print(self.name + " used " + spell + " on " + target.name + " for "+ str(abs(spellEffectValue)) + " damage!")
 
-        elif spell == "Mend":
+        elif spell == Fore.MAGENTA + "Mend" + Fore.RESET:
             spellEffectValue = dice(6) + self.wp
             manaCost= 3
-            print(self.name + " used Mend on " + target.name + " for "+ str(abs(spellEffectValue)) + " healing ")
+            print(self.name + " used " + spell + " on " + target.name + " for "+ str(abs(spellEffectValue)) + " healing ")
 
         self.mp -= manaCost
         target.hp += spellEffectValue

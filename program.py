@@ -2,15 +2,30 @@ from characters import Characters
 from playerCharacters import PlayerCharacters
 from dice import dice
 import os
-from rules import printRules
+import colorama
+from colorama import Fore
 
+def printRules():
+    print("---------------")
+    print("Your " + Fore.BLUE + "party "+ Fore.WHITE + "is fighting a evil " + Fore.RED + "Sorcerer"+ Fore.WHITE + "...")
+    print("Defeat his hoard of " + Fore.RED + "orcs "+ Fore.WHITE + "to win!")
+    print("You can choose your difficulty, the default is " + Fore.GREEN + "Easy" + Fore.WHITE + ":")
+    print(Fore.GREEN + "      Easy" + Fore.WHITE + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.WHITE + "with default stats")
+    print(Fore.YELLOW + "      Medium" + Fore.WHITE + ": waves of 4 " + Fore.RED + "Orcs "+ Fore.WHITE + "with enhanced stats")
+    print(Fore.RED + "      Hard" + Fore.WHITE + ": waves of 6 " + Fore.RED + "Orcs "+ Fore.WHITE + "with enhanced stats")
+    print("The default number of waves is 1, but you can choose how many waves you want before starting the first round!")
+    print("You can exit the game by choosing not to start a new round and then choosing to exit")
+    print("---------------")
+
+def returnToNormal(string: str):
+    return (Fore.WHITE + colorama.Style.RESET_ALL + string)
 class Program:
     
     clear = lambda: os.system('cls')
     characters = []
 
-    warrior = PlayerCharacters("Warrior", 32, 5, 2, 5, 2, True, ["Rushdown"])
-    priest = PlayerCharacters("Priest", 20, 25, 0, 2, 6, True, ["Exorcism", "Mend"])
+    warrior = PlayerCharacters(Fore.BLUE + "Warrior" + Fore.WHITE, 32, 5, 2, 5, 2, True, [Fore.MAGENTA + "Rushdown" + Fore.RESET])
+    priest = PlayerCharacters(Fore.YELLOW + "Priest" + Fore.WHITE, 20, 25, 0, 2, 6, True, [Fore.MAGENTA + "Exorcism" + Fore.RESET, Fore.MAGENTA + "Mend" + Fore.RESET])
     
     characters.append(warrior)
     characters.append(priest)
@@ -27,7 +42,8 @@ class Program:
     while not startGame:
         validInput = False
         while not validInput:
-            pInput = input("Do you want to change game settings? Y/N\nInput:").capitalize()
+            print("Do you want to change game settings? " + (Fore.GREEN +"Y") + Fore.WHITE + "/" + (Fore.RED + "N"))
+            pInput = input(Fore.WHITE + "Input: ").capitalize()
             numOfOrcs = 1
             if pInput == "Y":
                 validInput = True
@@ -36,23 +52,33 @@ class Program:
                 if pInput == "1":
                     validDifficulty = False
                     while not validDifficulty:
-                        print("Which difficulty do you want?\n1 - Easy\n2 - Medium\n3 - Hard\nCancel - Go back")
+                        print("Which difficulty do you want?")
+                        print(Fore.GREEN + "1 - Easy")
+                        print(Fore.YELLOW +  "2 - Medium")
+                        print(Fore.RED + "3 - Hard")
+                        print(Fore.WHITE + "Cancel - Go back")
                         pInput = input("Input: ").capitalize()
                         if pInput == "1":
                             validDifficulty = True
                             difficulty = "Easy"
-                            print("Difficulty set to Easy")
+                            print("Difficulty set to " + Fore.GREEN + "Easy" + Fore.WHITE)
                         elif pInput == "2":
                             validDifficulty = True
                             difficulty = "Medium"
-                            print("Difficulty set to Medium")
+                            print("Difficulty set to " + Fore.YELLOW + "Medium" + Fore.WHITE)
                         elif pInput == "3":
                             validDifficulty = True
                             difficulty = "Hard"
-                            print("Difficulty set to Hard")
+                            print("Difficulty set to " + Fore.RED + "Hard" + Fore.WHITE)
                         elif pInput == "Cancel":
                             validDifficulty = True
-                            print("No changes to difficulty!\nDifficulty remains", difficulty)
+                            print(Fore.RED + "No changes to difficulty!")
+                            if difficulty == "Easy":
+                                print(Fore.WHITE + "Difficulty remains: " + Fore.GREEN + "Easy" + Fore.WHITE)
+                            elif difficulty == "Medium":
+                                print(Fore.WHITE + "Difficulty remains: " + Fore.YELLOW + "Medium" + Fore.WHITE)
+                            elif difficulty == "Hard":
+                                print(Fore.WHITE + "Difficulty remains: " + Fore.RED + "Hard" + Fore.WHITE)
                         else:
                             print(pInput)
                             print("Invalid Input: ")
@@ -95,7 +121,7 @@ class Program:
 
     for x in range(numOfOrcs):
         orcName = orcNames[dice(len(orcNames))-1]
-        orc = Characters(orcName.strip(), orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
+        orc = Characters(Fore.RED + orcName.strip() + Fore.WHITE, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
         orcNames.pop(orcNames.index(orcName))
         characters.append(orc)
        
@@ -106,7 +132,9 @@ class Program:
     enemiesChars = numOfOrcs
     while inGame:
         
-        pInput = input("Start new round? Y/N\nInput: ").capitalize()
+        
+        print("Start new Round? " + (Fore.GREEN +"Y") + Fore.WHITE + "/" + (Fore.RED + "N"))
+        pInput = input(Fore.WHITE + "Input: ").capitalize()
 
         if pInput == "Y":
 
@@ -131,8 +159,8 @@ class Program:
                     while not validInput:
                         
                         print("---------------")
-                        print("It's",char.name,"turn, what should he do?")
-                        print("1 - Attack\n2 - Cast Spell")
+                        print("It's " + Fore.BLUE + char.name + Fore.WHITE + " turn, what should he do?")
+                        print("1 - " + Fore.RED + "Attack" + Fore.WHITE + "\n2 - " + Fore.MAGENTA + "Cast Spell" + Fore.RESET)
                         pInput = input("Input: ")
 
                         if pInput == "1":
@@ -140,18 +168,18 @@ class Program:
                             validTarget = False
                             while not validTarget:
                                 print("---------------")
-                                print("What is your target? ")
+                                print("What is your target?")
 
                                 for x in range(len(targetIndexes)):
-                                    print(str(x+1)+" - "+ characters[targetIndexes[x]].name)
+                                    print(str(x+1)+" - " + characters[targetIndexes[x]].name)
                                 
-                                pInput = input("input: ")
+                                pInput = input("Input: ")
 
                                 try:
                                     char.attack(characters[targetIndexes[int(pInput)-1]])
                                     validTarget=True
                                 except:
-                                    print("Invalid input ")
+                                    print("Invalid input")
 
 
                         elif pInput == "2":
@@ -167,13 +195,13 @@ class Program:
                                     print(str(x + 1) + " - " + char.spells[x]) 
 
                                 pInput = input("Input: ")
-                                
-                                print(char.spells[int(pInput)-1])
 
                                 try:
                                     canCast = char.testSpells(char.spells[int(pInput)-1])
                                     validSpell = True
                                     spell = char.spells[int(pInput)-1]
+                                    
+
                                 except:
                                     print("Invalid input")
 
@@ -182,7 +210,7 @@ class Program:
                                     while not validTarget:
                                         print("---------------")
                                         print("What's your target?")
-                                        if(spell == "Mend"):
+                                        if(spell == Fore.MAGENTA + "Mend" + Fore.RESET):
                                             targetIndexes = []
                                             for x in characters:
                                                 if x.isPlayer:
@@ -192,13 +220,14 @@ class Program:
                                             print(str(x+1) + " - " + characters[targetIndexes[x]].name )
 
                                         pInput = input("Input: ")
-
                                         try:
+                                            #print(spell)
                                             char.castSpells(spell, characters[targetIndexes[int(pInput)-1]])
                                             validTarget = True
                                         except:
                                             print("Invalid input")
-                                else:
+
+                                elif validSpell and not canCast:
                                     validInput = False
                                     print("---------------")
                                     print("Not enough Mana!")
@@ -241,7 +270,7 @@ class Program:
                             
                         for x in range(numOfOrcs):
                             orcName = orcNames[dice(len(orcNames))-1]
-                            orc = Characters(orcName.strip(), 15, 0, 2, 2, 2, False)
+                            orc = Characters(Fore.RED + orcName.strip() + Fore.WHITE, orcStats[0], orcStats[1], orcStats[2], orcStats[3], orcStats[4], False)
                             orcNames.pop(orcNames.index(orcName))
                             characters.append(orc)
                         enemiesChars = numOfOrcs
@@ -250,10 +279,26 @@ class Program:
                         playerWin = True
     
         elif pInput == "N":
-            pInput = input("What do you wanna do?\n1 - Exit\n2 - Inspect characters\nInput: ")
-            if pInput == "1":
-                print("You ended the game...")
-                break
+            validInput = False
+            while not validInput:
+                print("What do you want to do?")
+                print("1 - " + Fore.GREEN + "Inspect character" + Fore.RESET)
+                print("2 - " + Fore.RED + "Exit" + Fore.RESET)
+                print("Cancel - Go back")
+                pInput = input("Input: ")
+                
+                if pInput == "1":
+                    validInput = True
+                    for char in characters:
+                        char.inspectChar()
+                elif pInput == "2":
+                    validInput = True
+                    print("You ended the game...")
+                    break
+                elif pInput == "Cancel":
+                    validInput = True
+                else:
+                    print("Invalid Input")
 
         else:
             print("Invalid input")  
