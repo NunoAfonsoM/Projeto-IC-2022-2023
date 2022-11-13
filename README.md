@@ -24,6 +24,7 @@
     - Nomes random para os orcs
     - Settings de dificuldade e numero de rondas
     - Prints coloridos
+    - Inspeção de Characters
     - Correção de bugs
 
 ### Arquitetura da solução
